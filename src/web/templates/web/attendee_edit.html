@@ -2,6 +2,46 @@
 {% block title %}Attendee{% endblock %}
 
 {% block content %}
-<p>Edit Attendee page.</p>
+<form id="attendee_edit_form" action="{% url 'attendee_edit' pk=attendee.pk %}" method="POST">
+    {% csrf_token %}
+    <div class="p-4 pb-0">
+        <span class="fw-lighter"> Edit Attendee:</span>
+        <h4 class="fw-light uppercase">{{ attendee.name }} {{ attendee.surname }}</h4>
+        <hr>
+    </div>
+    <div class="row g-3 p-4">
+        <div class="row g-3">
+            <div class="col-md-4 fw-light">
+                {{ form.name.errors }}
+                {{ form.name.label_tag }}
+                {{ form.name }}
+            </div>
+            <div class="col-md-4 fw-light">
+                {{ form.surname.errors }}
+                {{ form.surname.label_tag }}
+                {{ form.surname }}
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-4  pb-2 fw-light">
+                {{ form.birth_date.errors }}
+                {{ form.birth_date.label_tag }}
+                {{ form.birth_date }}
+            </div>
+        </div>
+        <div class="row g-3">
+            <div class="col-md-4  pb-2 fw-light">
+                {{ form.ticket_id.errors }}
+                {{ form.ticket_id.label_tag }}
+                {{ form.ticket_id }}
+            </div>
+        </div>
+    </div>
+    <div class="col-12 p-4">
+        {{ form.non_field_errors }}
+        <button type="submit" name="submit" class="btn btn-body">Submit</button>
+    </div>
+
+</form>
 
 {% endblock %}
