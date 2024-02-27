@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Attendee{% endblock %}
+
+{% block content %}
+<div>
+    <h4 class="p-4 fw-lighter uppercase">Attendee Details</h4>
+    <hr>
+    <dl class="row">
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9 uppercase">{{ attendee.surname }} {{ attendee.name }}</dd>
+
+        <dt class="col-sm-3">Date of Birth</dt>
+        <dd class="col-sm-9">
+            {{attendee.birth_date |date:"d. F Y"}}
+        </dd>
+
+        <dt class="col-sm-3">Ticket ID</dt>
+        <dd class="col-sm-9">{{ attendee.ticket_id }}</dd>
+    </dl>
+    <a class="btn btn-body mt-4"
+       href="{% url 'attendee_edit' pk=attendee.pk %}">Edit</a>
+</div>
+
+{% endblock %}
