@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from .forms import AttendeeEditForm
+from .forms import AttendeeEditForm, AttendeeForm
 from .models import Attendee
 
 
@@ -10,7 +10,15 @@ def index(request):
 
 
 def attendee_add(request):
-    return render(request, "web/attendee_add.html", {})
+    if request.method == "POST":
+        form = AttendeeForm(request.POST)
+        if form.is_valid():
+            attendee = form.save()
+            return redirect(reverse("attendee", kwargs={"pk": attendee.pk}))
+
+    else:
+        form = AttendeeForm()
+    return render(request, "web/attendee_add.html", {"form": form})
 
 
 def attendee(request, pk: int):
