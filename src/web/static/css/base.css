@@ -1,0 +1,69 @@
+:root {
+    font-family: 'Aleo', serif;
+    color: #16313D;
+}
+
+
+.logo {
+    padding: 10px;
+    height: 80px;
+}
+
+
+.nav-background {
+    background-color: #88BDD8A6;
+}
+
+.nav {
+    align-content: flex-end;
+    padding-bottom: 8px;
+}
+
+.nav-link {
+    color: white;
+    background-color: #54595F;
+    padding: 6px 12px;
+    margin: 6px;
+}
+
+.nav-link:active {
+    color: #16313D;
+}
+
+.nav-link:hover {
+    color: #16313D;
+    border-color: #16313D;
+}
+
+.btn-body {
+    background-color: #6EC1E4;
+    border-color: #6EC1E4;
+
+}
+
+.btn-body:hover {
+    color: #16313D;
+    border-color: #16313D;
+}
+
+
+.uppercase {
+    text-transform: uppercase;
+
+}
+
+._text {
+    margin-top: 25px;
+
+}
+
+
+.footer-space {
+    margin-top: 25px;
+}
+
+
+.login-text {
+    color: #54595F;
+    font-size: 15px;
+}
