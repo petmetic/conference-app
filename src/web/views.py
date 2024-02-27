@@ -1,5 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 
+from .forms import AttendeeEditForm
 from .models import Attendee
 
 
@@ -19,7 +21,24 @@ def attendee(request, pk: int):
 def attendee_edit(request, pk: int):
     attendee = get_object_or_404(Attendee, pk=pk)
 
-    return render(request, "web/attendee_edit.html", {"attendee": attendee})
+    if request.method == "POST":
+        form = AttendeeEditForm(
+            request.POST,
+            instance=attendee,
+            initial={"attendee": attendee},
+        )
+        if form.is_valid():
+            print("form is valid")
+            attendee = form.save()
+            return redirect(reverse("attendee", kwargs={"pk": attendee.pk}))
+        else:
+            print(form.errors)
+    else:
+        form = AttendeeEditForm(instance=attendee, initial={"attendee": attendee})
+
+    return render(
+        request, "web/attendee_edit.html", {"form": form, "attendee": attendee}
+    )
 
 
 def attendee_list(request):

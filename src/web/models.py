@@ -18,5 +18,8 @@ class Attendee(models.Model):
     birth_date = models.DateField(blank=True, null=True)
     ticket_id = models.CharField(max_length=200, null=True, default="")
 
+    added = models.DateTimeField(auto_now_add=True)
+    changed = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return f"{self.name} {self.surname}"
