@@ -28,11 +28,10 @@ def attendee_edit(request, pk: int):
             initial={"attendee": attendee},
         )
         if form.is_valid():
-            print("form is valid")
             attendee = form.save()
             return redirect(reverse("attendee", kwargs={"pk": attendee.pk}))
         else:
-            print(form.errors)
+            print(form.errors, form.non_field_errors())
     else:
         form = AttendeeEditForm(instance=attendee, initial={"attendee": attendee})
 
