@@ -1,16 +1,21 @@
-from datetime import date
-
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
-from .forms import AttendeeEditForm, AttendeeForm, ArrivalForm
+from .forms import AttendeeEditForm, AttendeeForm, ArrivalForm, CustomAuthenticationForm
 from .models import Attendee, Arrival
 
 
+@login_required
 def index(request):
+    user = request.user
     return render(request, "web/index.html", {})
 
 
+@login_required
 def attendee_add(request):
     if request.method == "POST":
         form = AttendeeForm(request.POST)
@@ -23,11 +28,13 @@ def attendee_add(request):
     return render(request, "web/attendee_add.html", {"form": form})
 
 
+@login_required
 def attendee(request, pk: int):
     attendee = get_object_or_404(Attendee, pk=pk)
     return render(request, "web/attendee.html", {"attendee": attendee})
 
 
+@login_required
 def attendee_edit(request, pk: int):
     attendee = get_object_or_404(Attendee, pk=pk)
 
@@ -48,11 +55,13 @@ def attendee_edit(request, pk: int):
     )
 
 
+@login_required
 def attendee_list(request):
     attendees = Attendee.objects.all().order_by("surname")
     return render(request, "web/attendee_list.html", {"attendee_list": attendees})
 
 
+@login_required
 def arrivals_check(request):
     arrivals = Arrival.objects.filter()
     return render(
@@ -62,6 +71,7 @@ def arrivals_check(request):
     )
 
 
+@login_required
 def arrivals_add(request):
     if request.method == "POST":
         form = ArrivalForm(request.POST)
@@ -78,6 +88,16 @@ def arrivals_add(request):
     )
 
 
+@login_required
 def arrival(request, pk: int):
     arrival = get_object_or_404(Arrival, pk=pk)
     return render(request, "web/arrival.html", {"arrival": arrival})
+
+
+class CustomLoginView(LoginView):
+    form_class = CustomAuthenticationForm
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect("/")
