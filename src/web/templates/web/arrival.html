@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Arrivals Detail View{% endblock %}
+
+{% block content %}
+<div>
+    <h4 class="p-4 fw-lighter uppercase">Arrival Details</h4>
+    <hr>
+    <dl class="row">
+        <dt class="col-sm-3">Name</dt>
+        <dd class="col-sm-9 uppercase">{{ arrival.attendee.surname }} {{ arrival.attendee.name }}</dd>
+
+        <dt class="col-sm-3">Time of arrival</dt>
+        <dd class="col-sm-9">
+            {{arrival}}
+        </dd>
+
+        <dt class="col-sm-3">Ticket ID</dt>
+        <dd class="col-sm-9">{{ arrival.attendee.ticket_id }}</dd>
+    </dl>
+</div>
+{% endblock %}

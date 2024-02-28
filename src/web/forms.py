@@ -120,23 +120,11 @@ class AttendeeEditForm(ModelForm):
 class ArrivalForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
-        def get_attendee_names():
-            self.attendees = Attendee.objects.all()
-            attendee_list = []
-            for attendee in self.attendees:
-                attendee_list.append(attendee)
-
-            return attendee_list
 
         super(ArrivalForm, self).__init__(*args, **kwargs)
-        self.fields["attendee"] = forms.ChoiceField(choices=get_attendee_names)
-
-    attendee = forms.ChoiceField(
-        required=True,
-        widget=forms.Select(
-            attrs={"class": "regDropDown"},
-        ),
-    )
+        self.fields["attendee"] = forms.ModelChoiceField(
+            queryset=Attendee.objects.all().order_by("surname"),
+        )
 
     arrival = forms.DateTimeField(
         label="Time of Arrival",
