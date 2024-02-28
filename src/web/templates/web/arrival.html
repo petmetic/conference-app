@@ -11,7 +11,7 @@
 
         <dt class="col-sm-3">Time of arrival</dt>
         <dd class="col-sm-9">
-            {{arrival}}
+            {{arrival.arrival|date:"d. F Y"}} at {{arrival.arrival|time:"H:i"}}
         </dd>
 
         <dt class="col-sm-3">Ticket ID</dt>
