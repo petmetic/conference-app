@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<main class="row justify-content-md-center p-4 mt-4">
+    <form class="form-floating col-4 mt-4" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+
+        {% if form.errors %}
+        <h4 class="h3 mb-3 fw-light">Your username and password didn't match. Please try again."</h4>
+        {% endif %}
+
+        {% if next and user.is_authenticated %}
+        <h4 class="h3 mb-3 fw-light">Your account doesn't have access to this page. To proceed, please log in with an
+            account that has access."</h4>
+        {% endif %}
+
+        <div class="d-flex flex-column mb-4 gap-2">
+            <div class="col-12">
+                {{ form.username }}
+            </div>
+            <div class="col-12">
+                {{ form.password }}
+            </div>
+        </div>
+
+        <input type="submit" value="login" class="btn btn-body mb-4">
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</main>
+{% endblock %}

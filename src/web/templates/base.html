@@ -16,12 +16,14 @@
 </head>
 <body>
 <header class="nav-background d-flex justify-content-between">
+
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="{% url 'index' %}"><img src="/static/images/logo.png"
                                                                   alt="Conference App logo"
                                                                   href="{% url 'index' %}"
                                                                   class="logo"/>Conference App</a>
+            {% if request.user.is_authenticated %}
             <div class="container-fluid">
                 <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -38,9 +40,16 @@
                             <a class="nav-link" href="{% url 'arrivals_check'%}" aria-pressed="true">Check arrivals</a>
                         </li>
                     </ul>
+
                 </div>
             </div>
+            <div>
+                <a class="btn btn-nav" role="button" data-bs-toogle="button" aria-pressed="true"
+                   href="{% url 'logout' %}">Logout</a></div>
+            {%endif %}
+
     </nav>
+
 </header>
 
 <div class="container justify-content-center">

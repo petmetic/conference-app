@@ -2,6 +2,7 @@ from django.forms import ModelForm
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import AuthenticationForm
 
 from .models import Attendee, Arrival
 
@@ -138,3 +139,15 @@ class ArrivalForm(ModelForm):
     class Meta:
         model = Arrival
         fields = ["attendee", "arrival"]
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields["username"].widget.attrs.update(
+            {"placeholder": "Username", "class": "form-control"}
+        )
+        self.fields["password"].widget.attrs.update(
+            {"placeholder": "Password", "class": "form-control"}
+        )
