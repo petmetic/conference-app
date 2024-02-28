@@ -21,6 +21,7 @@ def attendee_add(request):
         form = AttendeeForm(request.POST)
         if form.is_valid():
             attendee = form.save()
+
             return redirect(reverse("attendee", kwargs={"pk": attendee.pk}))
 
     else:
@@ -44,6 +45,7 @@ def attendee_edit(request, pk: int):
             instance=attendee,
             initial={"attendee": attendee},
         )
+
         if form.is_valid():
             attendee = form.save()
             return redirect(reverse("attendee", kwargs={"pk": attendee.pk}))
