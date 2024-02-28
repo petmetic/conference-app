@@ -58,12 +58,7 @@ def arrivals_check(request):
 def arrivals_add(request):
     attendees = Attendee.objects.all()
     if request.method == "POST":
-        form = ArrivalForm(
-            request.POST,
-            attendee_list=[
-                (attendee.id, attendee.surname, attendee.name) for attendee in attendees
-            ],
-        )
+        form = ArrivalForm(request.POST)
         if form.is_valid():
             arrival = form.save()
             return redirect(reverse("arrivals_detail", kwargs={"pk": arrival.pk}))
