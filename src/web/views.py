@@ -54,8 +54,12 @@ def attendee_list(request):
 
 
 def arrivals_check(request):
-    arrivals = Arrival.objects.all()
-    return render(request, "web/arrivals_check.html", {"arrival_list": arrivals})
+    arrivals = Arrival.objects.filter()
+    return render(
+        request,
+        "web/arrivals_check.html",
+        {"arrival_list": arrivals},
+    )
 
 
 def arrivals_add(request):

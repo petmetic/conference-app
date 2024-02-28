@@ -6,7 +6,12 @@
 </h4>
 <hr>
 <div class="p-2">
-    <table class="table">
+    <div class="col p-4" >
+        <label for="arrivals_name">Search List of Arrivals:</label>
+        <input id="arrivals_name" type="text" placeholder="Search here"/>
+    </div>
+
+    <table class="table p-t-4 m-t-4">
         <thead>
         <tr>
             <th scope="col">Attendee</th>
@@ -15,16 +20,25 @@
         </tr>
         </thead>
         {% for arrival in arrival_list %}
-        <tbody>
+        <tbody id="arrivals_list">
         <tr>
             <td>{{ arrival.attendee }}</td>
-            <td>{{arrival.arrival|date:"d. F Y"}}  at {{arrival.arrival|time:"H:i"}}</td>
+            <td>{{arrival.arrival|date:"d. F Y"}} at {{arrival.arrival|time:"H:i"}}</td>
             <td><a class="btn btn-body p-l-4"
                    href="{% url 'arrival' pk=arrival.pk %}">View
-                </a></td>
+            </a></td>
         </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#arrivals_name").on("keyup", function () {
+            let value = $(this).val().toLowerCase();
+            $("#arrivals_list tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });</script>
 {% endblock %}
