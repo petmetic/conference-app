@@ -1,8 +1,10 @@
+from datetime import date
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from .forms import AttendeeEditForm, AttendeeForm
-from .models import Attendee
+from .forms import AttendeeEditForm, AttendeeForm, ArrivalForm
+from .models import Attendee, Arrival
 
 
 def index(request):
@@ -38,8 +40,6 @@ def attendee_edit(request, pk: int):
         if form.is_valid():
             attendee = form.save()
             return redirect(reverse("attendee", kwargs={"pk": attendee.pk}))
-        else:
-            print(form.errors, form.non_field_errors())
     else:
         form = AttendeeEditForm(instance=attendee, initial={"attendee": attendee})
 
@@ -54,8 +54,26 @@ def attendee_list(request):
 
 
 def arrivals_check(request):
-    return render(request, "web/arrivals_check.html", {})
+    arrivals = Arrival.objects.all()
+    return render(request, "web/arrivals_check.html", {"arrival_list": arrivals})
 
 
 def arrivals_add(request):
-    return render(request, "web/arrivals_add.html", {})
+    if request.method == "POST":
+        form = ArrivalForm(request.POST)
+        if form.is_valid():
+            arrival = form.save()
+            return redirect(reverse("arrival", kwargs={"pk": arrival.pk}))
+    else:
+        form = ArrivalForm()
+
+    return render(
+        request,
+        "web/arrivals_add.html",
+        {"form": form},
+    )
+
+
+def arrival(request, pk: int):
+    arrival = get_object_or_404(Arrival, pk=pk)
+    return render(request, "web/arrival.html", {"arrival": arrival})

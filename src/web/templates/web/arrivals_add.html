@@ -3,4 +3,16 @@
 
 {% block content %}
 <p>Here you can add a new Arrival.</p>
+<p>Choose attendee:</p>
+<p>Choose arrival date:</p>
+<p>Choose arrival time:</p>
+<form action="{% url 'arrivals_add' %}" method="post" class="row align-items-end">
+    {% csrf_token %}
+    {{form.as_p}}
+    <div class="col-12 p-4">
+        {{ form.non_field_errors }}
+        <button type="submit" name="submit" class="btn btn-body">Submit</button>
+    </div>
+
+</form>
 {% endblock %}
