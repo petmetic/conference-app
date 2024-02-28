@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from .forms import AttendeeEditForm, AttendeeForm
-from .models import Attendee
+from .forms import AttendeeEditForm, AttendeeForm, ArrivalForm
+from .models import Attendee, Arrival
 
 
 def index(request):
@@ -38,8 +38,6 @@ def attendee_edit(request, pk: int):
         if form.is_valid():
             attendee = form.save()
             return redirect(reverse("attendee", kwargs={"pk": attendee.pk}))
-        else:
-            print(form.errors, form.non_field_errors())
     else:
         form = AttendeeEditForm(instance=attendee, initial={"attendee": attendee})
 
@@ -58,4 +56,22 @@ def arrivals_check(request):
 
 
 def arrivals_add(request):
-    return render(request, "web/arrivals_add.html", {})
+    attendees = Attendee.objects.all()
+    if request.method == "POST":
+        form = ArrivalForm(
+            request.POST,
+            attendee_list=[
+                (attendee.id, attendee.surname, attendee.name) for attendee in attendees
+            ],
+        )
+        if form.is_valid():
+            arrival = form.save()
+            return redirect(reverse("arrivals_detail", kwargs={"pk": arrival.pk}))
+    else:
+        form = ArrivalForm()
+
+    return render(
+        request,
+        "web/arrivals_add.html",
+        {"form": form},
+    )
