@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
@@ -52,7 +54,8 @@ def attendee_list(request):
 
 
 def arrivals_check(request):
-    return render(request, "web/arrivals_check.html", {})
+    arrivals = Arrival.objects.all()
+    return render(request, "web/arrivals_check.html", {"arrival_list": arrivals})
 
 
 def arrivals_add(request):
