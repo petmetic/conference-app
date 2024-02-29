@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<main class="row justify-content-md-center p-4 mt-4">
+    <form class="form-floating col-4 mt-4" method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign up</button>
+    </form>
+    <p>If you have an account, login here.</p>
+</main>
+{% endblock %}

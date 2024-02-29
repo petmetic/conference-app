@@ -3,9 +3,15 @@ from django.urls import reverse
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 
-from .forms import AttendeeEditForm, AttendeeForm, ArrivalForm, CustomAuthenticationForm
+from .forms import (
+    AttendeeEditForm,
+    AttendeeForm,
+    ArrivalForm,
+    CustomAuthenticationForm,
+    SignUpForm,
+)
 from .models import Attendee, Arrival
 
 
@@ -103,3 +109,15 @@ class CustomLoginView(LoginView):
 def custom_logout(request):
     logout(request)
     return redirect("/")
+
+
+def register(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect("/")
+    else:
+        form = SignUpForm()
+    return render(request, "registration/register.html", {"form": form})
