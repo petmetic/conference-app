@@ -20,6 +20,11 @@ def index(request):
 
 
 @login_required
+def home(request):
+    return render(request, "web/home.html", {})
+
+
+@login_required
 def attendee_add(request):
     if request.method == "POST":
         form = AttendeeForm(request.POST)

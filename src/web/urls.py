@@ -12,5 +12,6 @@ urlpatterns = [
     path("arrivals/check/", views.arrivals_check, name="arrivals_check"),
     path("arrivals/add/", views.arrivals_add, name="arrivals_add"),
     path("logout", views.custom_logout, name="logout"),
+    path("home/", views.index, name="home"),
     path("", views.index, name="index"),
 ]
