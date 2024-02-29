@@ -15,9 +15,7 @@ from .forms import (
 from .models import Attendee, Arrival
 
 
-@login_required
 def index(request):
-    user = request.user
     return render(request, "web/index.html", {})
 
 
