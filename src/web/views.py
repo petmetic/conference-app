@@ -16,12 +16,10 @@ from .models import Attendee, Arrival
 
 
 def index(request):
-    return render(request, "web/index.html", {})
-
-
-@login_required
-def home(request):
-    return render(request, "web/home.html", {})
+    if request.user.is_authenticated:
+        return render(request, "web/home.html", {})
+    else:
+        return render(request, "web/index.html", {})
 
 
 @login_required
