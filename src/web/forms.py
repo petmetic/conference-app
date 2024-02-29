@@ -2,7 +2,8 @@ from django.forms import ModelForm
 
 from django import forms
 from django.core.exceptions import ValidationError
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.models import User
 
 from .models import Attendee, Arrival
 
@@ -157,3 +158,16 @@ class CustomAuthenticationForm(AuthenticationForm):
         self.fields["password"].widget.attrs.update(
             {"placeholder": "Password", "class": "form-control"}
         )
+
+
+class SignUpForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = [
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "password1",
+            "password2",
+        ]
