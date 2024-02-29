@@ -161,6 +161,78 @@ class CustomAuthenticationForm(AuthenticationForm):
 
 
 class SignUpForm(UserCreationForm):
+
+    username = forms.CharField(
+        label="username",
+        label_suffix="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "type": "text",
+                "placeholder": "johndoe",
+            }
+        ),
+    )
+    first_name = forms.CharField(
+        label="first name",
+        label_suffix="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "type": "text",
+                "placeholder": "John",
+            }
+        ),
+    )
+
+    last_name = forms.CharField(
+        label="last name",
+        label_suffix="",
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control",
+                "type": "text",
+                "placeholder": "Doe",
+            }
+        ),
+    )
+
+    email = forms.EmailField(
+        label="email",
+        label_suffix="",
+        widget=forms.EmailInput(
+            attrs={
+                "class": "form-control",
+                "type": "email",
+                "placeholder": "email@example.com",
+            }
+        ),
+    )
+
+    password1 = forms.CharField(
+        label="password",
+        label_suffix="",
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control pass ",
+                "type": "password",
+                "placeholder": "pass",
+            }
+        ),
+    )
+
+    password2 = forms.CharField(
+        label="confirm password",
+        label_suffix="",
+        widget=forms.PasswordInput(
+            attrs={
+                "class": "form-control pass",
+                "type": "password",
+                "placeholder": "pass",
+            }
+        ),
+    )
+
     class Meta:
         model = User
         fields = [
