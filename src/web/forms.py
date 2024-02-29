@@ -123,21 +123,27 @@ class ArrivalForm(ModelForm):
     def __init__(self, *args, **kwargs):
 
         super(ArrivalForm, self).__init__(*args, **kwargs)
-        self.fields["attendee"] = forms.ModelChoiceField(
-            queryset=Attendee.objects.all().order_by("surname"),
-        )
+        self.fields["attendee"].help_text = "Select attendee name bellow"
 
-    arrival = forms.DateTimeField(
-        label="Time of Arrival",
+    attendee = forms.ModelChoiceField(
+        queryset=Attendee.objects.all().order_by("surname"),
+        label="Attendee",
+        label_suffix="",
+        widget=forms.Select(attrs={"class": "form-control"}),
+    )
+
+    arrival = forms.DateField(
+        label="Arrival Time",
         label_suffix="",
         widget=forms.DateTimeInput(
             format="%Y-%m-%d %H:%M:%S",
-            attrs={"class": "form-control", "type": "datetime"},
+            attrs={"class": "form-control", "type": "datetime-local"},
         ),
     )
 
     class Meta:
         model = Arrival
+
         fields = ["attendee", "arrival"]
 
 

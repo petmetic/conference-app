@@ -2,13 +2,24 @@
 {% block title %}Add Arrival{% endblock %}
 
 {% block content %}
-<p>Here you can add a new Arrival.</p>
-<p>Choose attendee:</p>
-<p>Choose arrival date:</p>
-<p>Choose arrival time:</p>
+<p class="m-4">Here you can add a new Arrival.</p>
 <form action="{% url 'arrivals_add' %}" method="post" class="row align-items-end">
     {% csrf_token %}
-    {{form.as_p}}
+    <div class="row g-3">
+        <div class="col-md-4  pb-2 fw-light">
+            {{ form.attendee.errors }}
+            {{ form.attendee.label_tag }}
+            <span class="fw-lighter p-2">{{ form.attendee.help_text }}</span>
+            {{ form.attendee }}
+        </div>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-4  pb-2 fw-light">
+            {{ form.arrival.errors }}
+            {{ form.arrival.label_tag }}
+            {{ form.arrival }}
+        </div>
+    </div>
     <div class="col-12 p-4">
         {{ form.non_field_errors }}
         <button type="submit" name="submit" class="btn btn-body">Submit</button>
