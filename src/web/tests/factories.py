@@ -23,7 +23,7 @@ class AttendeeFactory(factory.django.DjangoModelFactory):
 
     name = factory.Faker("first_name")
     surname = factory.Faker("last_name")
-    birth_date = factory.Faker("date_time", tzinfo=tz)  # "%Y-%m-%d %H:%M:%S"
+    birth_date = factory.Faker("date_object")  # "%Y-%m-%d"
     ticket_id = factory.Faker("sentence")
 
 
