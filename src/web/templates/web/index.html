@@ -2,5 +2,11 @@
 {% block title %}Conference App{% endblock %}
 
 {% block content %}
-<p>Index page of Conference App</p>
+<h1 class="d-flex justify-content-center p-4">Welcome to the Conference APP</h1>
+<h4 class="d-flex justify-content-center p-4">
+    <div class="d-flex justify-content-center p-4">
+        <div class="h3 mb-3 fw-light m-4"><a type="submit" class="btn btn-body" href="{% url 'register'%}">Sign up</a></div>
+        <div class="h3 mb-3 fw-light m-4"><a type="submit" class="btn btn-body" href="{% url 'login'%}">Login</a></div>
+    </div>
+</h4>
 {% endblock %}
