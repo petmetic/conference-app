@@ -2,3 +2,5 @@ Django~=5.0
 djangorestframework
 django-simple-history
 docutils
+factory_boy
+pytz
