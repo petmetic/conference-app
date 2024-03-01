@@ -25,7 +25,9 @@ class AttendeeTest(TestCase):
         cls.attendeeSean = AttendeeFactory(
             name="Sean", surname="Connery", ticket_id="thisisanexampleticket5678"
         )
-
+        cls.attendeeClark = AttendeeFactory.build(
+            name="Clark", surname="Kent", ticket_id="thisisanexampleticket9101"
+        )
         cls.arrivalJudy = ArrivalFactory(
             attendee=cls.attendeeJudy,
             arrival=datetime(2023, 8, 1, 18, 0, 0).astimezone(tz=tz),
@@ -42,3 +44,10 @@ class AttendeeTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, text="List of Attendees")
+        self.assertContains(response, text="Judy")
+        self.assertContains(response, text="Connery")
+
+    def test_attendee_adds_on_submit(self):
+        self.client.force_login(self.user)
+
+        # data =

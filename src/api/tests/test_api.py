@@ -5,9 +5,9 @@ from rest_framework.test import APITestCase
 from web.tests.factories import UserFactory, AttendeeFactory, ArrivalFactory
 
 
-class TestArrivalAPIView(APITestCase):
+class TestAttendeeAPIView(APITestCase):
     def setUpTestData(self):
-        self.url = reverse("users")
+        self.url = reverse("attendee")
         self.user = UserFactory()
         self.attendee = AttendeeFactory()
         self.arrival = ArrivalFactory()
