@@ -132,7 +132,7 @@ class ArrivalForm(ModelForm):
         widget=forms.Select(attrs={"class": "form-control"}),
     )
 
-    arrival = forms.DateField(
+    arrival = forms.DateTimeField(
         label="Arrival Time",
         label_suffix="",
         widget=forms.DateTimeInput(
