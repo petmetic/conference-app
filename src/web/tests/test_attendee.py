@@ -35,10 +35,10 @@ class AttendeeTest(TestCase):
             arrival=datetime(2023, 8, 2, 18, 0, 0).astimezone(tz=tz),
         )
 
-    def test_check_arrivals_page_displays(self):
+    def test_attendee_list_page_displays(self):
         self.client.force_login(self.user)
 
         response = self.client.get(reverse("attendee_list"))
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, text="List of arrivals")
+        self.assertContains(response, text="List of Attendees")

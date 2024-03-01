@@ -12,4 +12,4 @@ class GeneralTest(TestCase):
         response = self.client.get("/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, text="Index page of Conference App")
+        self.assertContains(response, text="Welcome to the Conference APP")
