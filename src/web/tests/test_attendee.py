@@ -48,6 +48,4 @@ class AttendeeTest(TestCase):
         self.assertContains(response, text="Connery")
 
     def test_attendee_adds_on_submit(self):
-        self.client.force_login(self.user)
-
-        # data =
+        pass

@@ -6,8 +6,8 @@ from web.tests.factories import UserFactory, AttendeeFactory, ArrivalFactory
 
 
 class TestAttendeeAPIView(APITestCase):
-    def setUpTestData(self):
-        self.url = reverse("attendee")
+    def setUp(self):
+        self.url = reverse("attendee-list")
         self.user = UserFactory()
         self.attendee = AttendeeFactory()
         self.arrival = ArrivalFactory()
