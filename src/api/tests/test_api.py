@@ -56,8 +56,6 @@ class TestArrivalAPIView(APITestCase):
         response = self.client.get(self.url_arrival)
         self.assertEquals(response.status_code, 200)
 
-        csrftoken = response.cookies["csrftoken"]
-
         arrival = ArrivalFactory(
             attendee=self.attendee,
             arrival=datetime(2023, 8, 2, 18, 0, 0).astimezone(tz=tz),
@@ -72,15 +70,21 @@ class TestArrivalAPIView(APITestCase):
             "arrival": "2023-08-02 18:00:00",
         }
 
-        resp = self.client.post(
-            self.url_arrival, data, headers={"X=csrftoken": csrftoken}
-        )
-        print(resp.content)
-
-        self.assertEqual(resp.status_code, 200)
+        resp = self.client.post(self.url_arrival, data=json.dumps(data))
+        self.assertEqual(resp.status_code, 201)
 
         arrival = Arrival.objects.latest("id")
-        self.assertRedirects(resp, reverse("arrival-detail"), kwargs={"pk": arrival.pk})
 
-        response = self.client.get(response.url)
-        self.assertContains(response, text="2023-08-02 18:00:00")
+        arrival_time = arrival["arrival"]
+
+        self.assertEqual(expected_data[0]["arrival"], arrival_time)
+
+        print(resp.content)
+
+        # arrival_expected = expected_data["arrival"]
+        # arrival_api = response_data[0]["arrival"]
+        #
+        # name_expected = expected_data["attendee"]
+        # name_api = response_data[0]["attendee"]
+        #
+        # self.assertEqual(arrival_expected, arrival_api)
