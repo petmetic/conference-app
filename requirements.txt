@@ -1,3 +1,4 @@
+celery
 Django~=5.0
 djangorestframework
 django-simple-history
