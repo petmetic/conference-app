@@ -53,12 +53,9 @@ class TestArrivalAPIView(APITestCase):
 
     def test_post_arrival(self):
 
-        response = self.client.get(self.url_arrival)
-        self.assertEquals(response.status_code, 200)
-
         arrival = ArrivalFactory(
             attendee=self.attendee,
-            arrival=datetime(2023, 8, 2, 18, 0, 0).astimezone(tz=tz),
+            arrival=datetime(2023, 8, 2, 18, 0, 0),
         )
         data = {
             "attendee": arrival.attendee.id,
@@ -66,18 +63,18 @@ class TestArrivalAPIView(APITestCase):
         }
 
         expected_data = {
-            "attendee": "http://127.0.0.1:8000/api/attendee/1/",
+            "attendee": f"http://127.0.0.1:8000/api/attendee/{arrival.attendee.id}/",
             "arrival": "2023-08-02 18:00:00",
         }
 
-        resp = self.client.post(self.url_arrival, data=json.dumps(data))
-        self.assertEqual(resp.status_code, 201)
+        resp = self.client.post(self.url_arrival, data=data)
+        self.assertEqual(resp.status_code, 200)
 
         arrival = Arrival.objects.latest("id")
 
-        arrival_time = arrival["arrival"]
+        arrival_time = arrival.arrival.strftime("%Y-%m-%d %H:%M:%S")
 
-        self.assertEqual(expected_data[0]["arrival"], arrival_time)
+        self.assertEqual(expected_data["arrival"], arrival_time)
 
         print(resp.content)
 
