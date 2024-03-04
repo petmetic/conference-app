@@ -9,9 +9,6 @@ from web.models import Arrival
 from web.tests.factories import UserFactory, AttendeeFactory, ArrivalFactory
 
 
-tz = pytz.timezone("Europe/Ljubljana")
-
-
 class TestAttendeeAPIView(APITestCase):
     def setUp(self):
         self.url_attendee = reverse("attendee-list")
@@ -46,42 +43,38 @@ class TestAttendeeAPIView(APITestCase):
 
 class TestArrivalAPIView(APITestCase):
     def setUp(self):
-        self.url_arrival = reverse("arrivals_add")
+        self.url_arrival = reverse("arrival-list")
         self.user = UserFactory()
-        self.attendee = AttendeeFactory()
+        self.attendee = AttendeeFactory(name="Christine")
         self.client.force_login(self.user)
 
     def test_post_arrival(self):
 
-        arrival = ArrivalFactory(
+        arrival = ArrivalFactory.build(
             attendee=self.attendee,
-            arrival=datetime(2023, 8, 2, 18, 0, 0),
+            arrival=datetime(2023, 8, 2, 16, 0, 0, tzinfo=pytz.UTC),
         )
+
         data = {
-            "attendee": arrival.attendee.id,
-            "arrival": arrival.arrival.strftime("%Y-%m-%d %H:%M:%S"),
+            "attendee": f"http://127.0.0.1:8000/api/attendee/{arrival.attendee.id}/",
+            "arrival": arrival.arrival.strftime("%Y-%m-%d %H:%M:%S%z"),
         }
 
         expected_data = {
-            "attendee": f"http://127.0.0.1:8000/api/attendee/{arrival.attendee.id}/",
-            "arrival": "2023-08-02 18:00:00",
+            "attendee": f"http://testserver/api/attendee/{arrival.attendee.id}/",
+            "arrival": "2023-08-02 16:00:00+0000",
         }
 
         resp = self.client.post(self.url_arrival, data=data)
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 201)
+
+        returned_data = resp.content
+
+        self.assertEqual(returned_data, expected_data)
 
         arrival = Arrival.objects.latest("id")
 
-        arrival_time = arrival.arrival.strftime("%Y-%m-%d %H:%M:%S")
+        arrival_time = arrival.arrival.strftime("%Y-%m-%d %H:%M:%S%z")
 
         self.assertEqual(expected_data["arrival"], arrival_time)
-
-        print(resp.content)
-
-        # arrival_expected = expected_data["arrival"]
-        # arrival_api = response_data[0]["arrival"]
-        #
-        # name_expected = expected_data["attendee"]
-        # name_api = response_data[0]["attendee"]
-        #
-        # self.assertEqual(arrival_expected, arrival_api)
+        self.assertEqual(expected_data["arrival"], arrival_time)
