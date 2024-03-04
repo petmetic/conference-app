@@ -5,6 +5,7 @@ import pytz
 from django.urls import reverse
 from rest_framework.test import APITestCase
 
+from web.models import Arrival
 from web.tests.factories import UserFactory, AttendeeFactory, ArrivalFactory
 
 
@@ -77,3 +78,9 @@ class TestArrivalAPIView(APITestCase):
         print(resp.content)
 
         self.assertEqual(resp.status_code, 200)
+
+        arrival = Arrival.objects.latest("id")
+        self.assertRedirects(resp, reverse("arrival-detail"), kwargs={"pk": arrival.pk})
+
+        response = self.client.get(response.url)
+        self.assertContains(response, text="2023-08-02 18:00:00")
