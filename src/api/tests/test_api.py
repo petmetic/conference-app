@@ -10,7 +10,7 @@ class TestAttendeeAPIView(APITestCase):
         self.url = reverse("attendee-list")
         self.user = UserFactory()
         self.attendee = AttendeeFactory()
-        self.arrival = ArrivalFactory()
+        self.arrival = ArrivalFactory(attendee=self.attendee)
         self.client.force_login(self.user)
 
     def test_get_attendees(self):
@@ -28,10 +28,10 @@ class TestAttendeeAPIView(APITestCase):
         response_data = json.loads(response.content)
 
         ticket_id_expected = expected_content["ticket_id"]
-        ticket_id_api = response_data["ticket_id"]
+        ticket_id_api = response_data[0]["ticket_id"]
 
         name_expected = expected_content["name"]
-        name_api = response_data["name"]
+        name_api = response_data[0]["name"]
 
         self.assertEqual(ticket_id_expected, ticket_id_api)
         self.assertEqual(name_expected, name_api)
