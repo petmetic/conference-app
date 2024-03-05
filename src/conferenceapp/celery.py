@@ -4,7 +4,6 @@ from celery import Celery
 from celery.schedules import crontab
 
 from web.tasks import send_daily_email_task
-from django.contrib.auth.models import User
 from django.conf import settings
 
 
@@ -25,7 +24,7 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 @app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(crontab(), send_daily_email_task(user))
+    sender.add_periodic_task(crontab(), send_daily_email_task.delay())
 
 
 @app.task(bind=True, ignore_result=True)

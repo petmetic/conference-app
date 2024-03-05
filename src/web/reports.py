@@ -1,8 +1,16 @@
-from celery.worker import request
+from datetime import datetime
+
+from web.models import Attendee
 
 
-def get_user_id(user):
-    if request.user.is_authenticated:
-        user_id = request.user.id
+def get_new_attendees():
+    today = datetime.now()
 
-    return user_id
+    attendees = Attendee.objects.filter(added=today)
+    print(type(attendees))
+    print(attendees)
+
+    return attendees
+
+
+def get_new_arrivals(): ...
