@@ -14,8 +14,11 @@ from .forms import (
 )
 from .models import Attendee, Arrival
 
+from .tasks import sleeptime
+
 
 def index(request):
+    sleeptime(15)
     if request.user.is_authenticated:
         return render(request, "web/home.html", {})
     else:
