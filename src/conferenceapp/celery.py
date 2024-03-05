@@ -1,7 +1,12 @@
 import os
 
 from celery import Celery
+from celery.schedules import crontab
+
+from web.tasks import send_daily_email_task
+from django.contrib.auth.models import User
 from django.conf import settings
+
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "conferenceapp.settings")
@@ -15,7 +20,12 @@ app = Celery("conferenceapp")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
 # Load task modules from all registered Django apps.
-app.autodiscover_tasks()
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+
+
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+    sender.add_periodic_task(crontab(), send_daily_email_task(user))
 
 
 @app.task(bind=True, ignore_result=True)

@@ -142,4 +142,4 @@ CELERY_TASK_SERIALIZER = "json"
 
 # EMAIL configuration
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-EMAIL_FILE_PATH = "/emails"
+EMAIL_FILE_PATH = "emails"
