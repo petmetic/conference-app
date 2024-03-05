@@ -18,7 +18,8 @@ from .tasks import sleeptime
 
 
 def index(request):
-    sleeptime(15)
+    sleeptime.delay(15)  # .delay invoke celery instance to receive tasks
+    print("task was received")
     if request.user.is_authenticated:
         return render(request, "web/home.html", {})
     else:

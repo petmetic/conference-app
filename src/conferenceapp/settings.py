@@ -134,8 +134,9 @@ LOGIN_REDIRECT_URL = "/"
 
 from .localsettings import *
 
-# REDIS configuration
+# CELERY conf
 
 CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}"
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
