@@ -62,21 +62,20 @@ class TestArrivalAPIView(APITestCase):
 
         expected_data_from_api = {
             "attendee": f"http://testserver/api/attendee/{arrival.attendee.id}/",
-            "arrival": "2023-08-02 16:00:00Z",
+            "arrival": "2023-08-02T16:00:00Z",
         }
 
         resp = self.client.post(self.url_arrival, data=data)
         self.assertEqual(resp.status_code, 201)
 
-        returned_data = resp.json()
-        print(returned_data)
+        returned_data_from_resp = resp.json()
 
-        self.assertEqual(returned_data, expected_data_from_api)
+        # is response data from POST request == expected data
+        self.assertEqual(returned_data_from_resp, expected_data_from_api)
 
         # has arrival from API been written in db
-        arrival = Arrival.objects.latest("id")
+        arrival_in_db = Arrival.objects.latest("id")
 
-        arrival_time = arrival.arrival.strftime("%Y-%m-%d %H:%M:%S%z")
+        arrival_time = arrival_in_db.arrival.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-        self.assertEqual(returned_data["arrival"], arrival_time)
-        self.assertEqual(returned_data["arrival"], arrival_time)
+        self.assertEqual(returned_data_from_resp["arrival"], arrival_time)
