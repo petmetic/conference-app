@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "Europe/Berlin"
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -133,6 +133,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = "/"
 
+REST_FRAMEWORK = {
+    "TEST_REQUEST_DEFAULT_FORMAT": "json",
+}
 
 from .localsettings import *
 
@@ -146,7 +149,6 @@ CELERY_TASK_SERIALIZER = "json"
 #     # Executes every day at midnight.
 #     "send-daily-email": {"task": "tasks.send_daily_email_task", "schedule": crontab()},
 # }
-
 
 # EMAIL configuration
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

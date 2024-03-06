@@ -4,3 +4,6 @@ djangorestframework
 django-simple-history
 docutils
 redis
+factory_boy
+pytz
+

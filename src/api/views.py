@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 
 from .serializers import UserSerializer, AttendeeSerializer, ArrivalSerializer
 from web.models import Attendee, Arrival
@@ -12,7 +12,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     queryset = User.objects.all().order_by("username")
     serializer_class = UserSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class AttendeeViewSet(viewsets.ModelViewSet):
@@ -22,7 +22,7 @@ class AttendeeViewSet(viewsets.ModelViewSet):
 
     queryset = Attendee.objects.all()
     serializer_class = AttendeeSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ArrivalViewSet(viewsets.ModelViewSet):
