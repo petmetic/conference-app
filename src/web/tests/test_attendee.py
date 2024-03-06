@@ -58,12 +58,17 @@ class AttendeeTest(TestCase):
             "ticket_id": self.attendeeClark.ticket_id,
         }
 
+        attendee_previous = Attendee.objects.latest("id")
         response = self.client.post(reverse("attendee_add"), data=data)
 
-        attendee = Attendee.objects.latest("id")
+        attendee_new = Attendee.objects.latest("id")
+
+        self.assertNotEqual(attendee_previous.id, attendee_new.id)
 
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse("attendee", kwargs={"pk": attendee.pk}))
+        self.assertRedirects(
+            response, reverse("attendee", kwargs={"pk": attendee_new.id})
+        )
 
         response = self.client.get(response.url)
         self.assertContains(response, text="Clark")
