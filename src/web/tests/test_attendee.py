@@ -4,6 +4,7 @@ from django.urls import reverse
 import pytz
 
 from .factories import UserFactory, AttendeeFactory, ArrivalFactory
+from ..models import Attendee
 
 tz = pytz.timezone("Europe/Ljubljana")
 
@@ -48,4 +49,21 @@ class AttendeeTest(TestCase):
         self.assertContains(response, text="Connery")
 
     def test_attendee_adds_on_submit(self):
-        pass
+        self.client.force_login(self.user)
+
+        data = {
+            "name": self.attendeeClark.name,
+            "surname": self.attendeeClark.surname,
+            "birth_date": self.attendeeClark.birth_date,
+            "ticket_id": self.attendeeClark.ticket_id,
+        }
+
+        response = self.client.post(reverse("attendee_add"), data=data)
+
+        attendee = Attendee.objects.latest("id")
+
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("attendee", kwargs={"pk": attendee.pk}))
+
+        response = self.client.get(response.url)
+        self.assertContains(response, text="Clark")
