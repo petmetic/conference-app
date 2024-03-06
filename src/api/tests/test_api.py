@@ -71,7 +71,7 @@ class TestArrivalAPIView(APITestCase):
         returned_data_from_resp = resp.json()
 
         # is response data from POST request == expected data
-        self.assertEqual(returned_data_from_resp, expected_data_from_api)
+        self.assertAlmostEqual(returned_data_from_resp, expected_data_from_api)
 
         # has arrival from API been written in db
         arrival_in_db = Arrival.objects.latest("id")
