@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+from celery.schedules import crontab
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -139,6 +141,12 @@ CELERY_BROKER_URL = f"redis://{REDIS_HOST}:{REDIS_PORT}"
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
+
+# CELERY_BEAT_SCHEDULE = {
+#     # Executes every day at midnight.
+#     "send-daily-email": {"task": "tasks.send_daily_email_task", "schedule": crontab()},
+# }
+
 
 # EMAIL configuration
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
