@@ -1,17 +1,28 @@
 from celery import shared_task
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 
 @shared_task
 def send_daily_email_task():
-    from django.contrib.auth.models import User
+    from .reports import get_new_attendees, get_new_attendee_count
 
     subject = "Conference App Report"
-    message = "These were the new arrivals today: [list of arrivals] \n The total amount of Arrivals: [count]"
+    html = render_to_string(
+        "web/report.html",
+        {
+            "attendee_list": get_new_attendees(),
+            "attendee_count": get_new_attendee_count(get_new_attendees()),
+        },
+    )
     from_email = "admin@conferenceapp.com"
 
-    # lookup user_id in db; put user_id in recipient list instead of request
     recipient_list = ["admin@conferenceapp.com"]
-    send_mail(subject, message, from_email, recipient_list)
+    send_mail(
+        subject=subject,
+        message=html,
+        from_email=from_email,
+        recipient_list=recipient_list,
+    )
 
     return None
