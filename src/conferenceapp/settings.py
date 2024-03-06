@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "simple_history",
     "web",
     "api",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -145,10 +146,13 @@ CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 
-# CELERY_BEAT_SCHEDULE = {
-#     # Executes every day at midnight.
-#     "send-daily-email": {"task": "tasks.send_daily_email_task", "schedule": crontab()},
-# }
+CELERY_BEAT_SCHEDULE = {
+    # Executes every day at midnight.
+    "send-daily-email": {
+        "task": "send_daily_email_task",
+        "schedule": crontab(minute=0, hour=0),
+    },
+}
 
 # EMAIL configuration
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"

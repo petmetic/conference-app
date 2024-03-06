@@ -22,22 +22,6 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 
-@app.on_after_configure.connect
-def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(
-        crontab(
-            minute=1,
-        ),
-        send_daily_email_task.delay(),
-    )
-
-
-# app.conf.beat_schedule = {
-#     # Executes every day at midnight.
-#     "send-daily-email": {"task": "tasks.send_daily_email_task", "schedule": crontab()},
-# }
-
-
 @app.task(bind=True, ignore_result=True)
 def debug_task(self):
     print(f"Request: {self.request!r}")

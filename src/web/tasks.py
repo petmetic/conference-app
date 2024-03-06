@@ -3,7 +3,7 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 
 
-@shared_task
+@shared_task(name="send_daily_email_task")
 def send_daily_email_task():
     from .reports import get_new_attendees, get_new_attendee_count
 
@@ -25,4 +25,4 @@ def send_daily_email_task():
         recipient_list=recipient_list,
     )
 
-    return None
+    return True
