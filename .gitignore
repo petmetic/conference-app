@@ -5,3 +5,5 @@ db.sqlite3
 .idea
 localsettings.py
 static/
+dump.rdb
+emails/

@@ -1,7 +1,8 @@
+from datetime import datetime
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login
 
@@ -73,6 +74,7 @@ def attendee_list(request):
 @login_required
 def arrivals_check(request):
     arrivals = Arrival.objects.filter()
+
     return render(
         request,
         "web/arrivals_check.html",

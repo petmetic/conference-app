@@ -1,0 +1,19 @@
+<html lang="en-EN">
+<title>Daily Report</title>
+<body>
+<h4 class="p-4 fw-lighter uppercase">Daily report</h4>
+<hr>
+<div class="p-2">
+    <ul class="list-group">
+        {% for attendee in attendee_list %}
+
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <span class="fw-light"><span class="fw-bold">{{ attendee.surname }}</span> , {{ attendee.name }}</span>
+        </li>
+
+        {% endfor %}
+        <li>Number of new attendees for today: {{ attendee_count }}</li>
+    </ul>
+</div>
+</body>
+</html>

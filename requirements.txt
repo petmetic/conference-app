@@ -1,6 +1,10 @@
+celery
 Django~=5.0
+django-celery-beat
 djangorestframework
 django-simple-history
 docutils
+redis
 factory_boy
 pytz
+
