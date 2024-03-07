@@ -1,25 +1,36 @@
 This is a Conference App that helps you keep track of conference attendees and their arrivals to the conference. It sends a daily email with a list of new attendees and the total number of them.
 
 ## Getting started
-1. First, clone or fork the repo.
 
 
-2. In the project folder of the application, install the requirements
+1. First, clone or fork the repo (SSH).
+```git clone git@bitbucket.org:conference-app/backend.git```
+
+
+2. Navigate to `backend` folder. Install the virtual environment:
+```python3.11 -m venv venv```
+
+3. Activate the virtual environment:
+```. venv/bin/activate```
+
+4. Navigate to `backend` folder. In the project folder of the application, install the requirements
 
 ```pip install -r requirements.txt```
 
+5. Copy `localsettings.py` to `src/conferenceapp` folder (next to `settings.py`).
 
-3. Create database: got to the `src` folder in project and run
-4. 
+
+6. Create database: got to the `src` folder in project and run
+
 ```./manage.py migrate```
 
 
-4. Create admin superuser for `Admin view`. Run command and follow the prompts:
-5. 
+7. Create admin superuser for `Admin view`. Run command and follow the prompts:
+
 ```./manage.py createsuperuser```
 
 
-5. For the application to work fully, install `Redis` on your computer:
+8. For the application to work fully, install `Redis` on your computer:
 
     Go to `https://redis.io/docs/install/install-redis/` for instructions on how to install and test if installation is working
 
@@ -27,19 +38,18 @@ This is a Conference App that helps you keep track of conference attendees and t
 ## How to run application
 To run the application, using the Celery email scheduling for reporting, you have to have 4 different processes running at the same time: the `Redis server`, `Celery worker`, `Celery beat` and the `Django application`.
 
-1.Start `Redis server` in tab in terminal:
+1.Go to `backend` and install `virtual env`(see Getting started - bullet no. 3) and start `Redis server` in new tab in terminal:
 
 ``````redis-server``````
 
-
-2.Run `Celery worker` in `src` folder different tab in terminal:
+2.Run `Celery worker` in `src` folder different tab in terminal (before heading to `src` folder, don't forget to activate `virtual env`):
 
 ```celery -A conferenceapp worker -l INFO --without-gossip --without-mingle  -Ofair --pool=solo```
 
 
 3.Run `Celery beat` in `src` folder in another tab in terminal:
 
-```celery -A <project name>  beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler```
+```celery -A conferenceapp  beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler```
 
 
 4.To run the application locally, in your `src` folder, enter in terminal:
@@ -67,7 +77,7 @@ There is also an API integration for processing arrivals and attendees.
 
 
 ### Administration page
-If you got to `http://127.0.0.1:8000/admin/`
+If you got to `http://127.0.0.1:8000/admin/` and log in,
 
 you can see the `Site administration` page, where you can `add`,`edit` and `delete` Arrivals and Attendees databases in the `WEB` section.
 Once in those tabs, you can search through the database using Name, Surname, Ticket ID number and date of arrival, depending on which tab you are in (check the help text under search bar for more info).
