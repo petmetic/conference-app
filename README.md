@@ -88,6 +88,8 @@ the `WEB` section.
 Once in those tabs, you can search through the database using Name, Surname, Ticket ID number and date of arrival,
 depending on which tab you are in (check the help text under search bar for more info).
 
+To view the changes to Attendees and Arrivals, click on `HISTORY` on the top right corner when viewing the details of an attendee or arrival.
+
 ## How to test the application
 
 To run the test, go to the `src` folder and run:
