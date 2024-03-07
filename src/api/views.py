@@ -32,4 +32,4 @@ class ArrivalViewSet(viewsets.ModelViewSet):
 
     queryset = Arrival.objects.all()
     serializer_class = ArrivalSerializer
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]

@@ -4,10 +4,8 @@
 {% block content %}
 <form id="attendee_add_form" action="{% url 'attendee_add'%}" method="POST">
     {% csrf_token %}
-    <div class="p-4 pb-0">
-        <span class="fw-lighter"> Add Attendee:</span>
-        <hr>
-    </div>
+    <h4 class="p-4 fw-lighter uppercase">Add Attendee</h4>
+<hr>
     <div class="row g-3 p-4">
         <div class="row g-3">
             <div class="col-md-4 fw-light">
