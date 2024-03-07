@@ -1,9 +1,5 @@
 import os
-
 from celery import Celery
-from celery.schedules import crontab
-
-from web.tasks import send_daily_email_task
 from django.conf import settings
 
 
