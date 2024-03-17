@@ -71,12 +71,16 @@ def attendee_list(request):
 
 @login_required
 def arrivals_check(request):
-    arrivals = Arrival.objects.filter()
+    q = request.GET.get("q", "")
+    if q:
+        filtered_arrivals = Arrival.objects.filter(attendee__name__icontains=q)
+    else:
+        filtered_arrivals = Arrival.objects.all()
 
     return render(
         request,
         "web/arrivals_check.html",
-        {"arrival_list": arrivals},
+        {"arrival_list": filtered_arrivals, "q": q},
     )
 
 
