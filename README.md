@@ -17,7 +17,7 @@ sends a daily email with a list of new attendees and the total number of them.
 
    ```pip install -r requirements.txt```
 
-5. Copy `localsettings.py` to `src/conferenceapp` folder (next to `settings.py`).
+5. Copy `localsettings.py` to `src/conferenceapp` folder (next to `settings.py`). An example of Redis configuration is in the file localsettings_example.py.
 
 
 6. Create database: go to the `src` folder in project and run
