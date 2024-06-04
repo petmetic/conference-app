@@ -1,10 +1,22 @@
+## Assignment
+This app was built as an interview assignment for a company that uses Django for its backend. Because of the limited time frame, some architectural trade-offs were made, 
+apart from not giving too much attention to design.
+I implemented only a simple(one-factor) sign-up form. In production, I would implement a two-factor authentication sign-up form in addition to a `forgotten password?` and `password reset` links.
+For templates that have no data shown, I would add a message about why there is no data. 
+The search bar is currently handled with JQuery. Depending on the use case, a direct query to the database through Django ORM could be implemented.
+Besides the standard template pages(view attendee list, add to list, etc.) and sign-up/log-in forms, I had to implement DRF, create a Celery task to send a daily email of all new attendees, 
+and on the Django Admin side, track all made changes. The Redis server has to be set up locally.
+
+---
+# Conference App
+
 This is a Conference App that helps you keep track of conference attendees and their arrivals to the conference. It
 sends a daily email with a list of new attendees and the total number of them.
 
 ## Getting started
 
 1. First, clone or fork the repo (SSH).
-   ```git clone git@bitbucket.org:conference-app/backend.git```
+   ```git clone git@github.com:petmetic/conference-app.git```
 
 
 2. Navigate to `backend` folder. Install the virtual environment:
