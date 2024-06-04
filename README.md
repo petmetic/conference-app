@@ -1,4 +1,4 @@
----
+
 ## Assignment
 This app was built as an interview assignment for a company that uses Django for its backend. Because of the limited time frame, some architectural trade-offs were made, 
 apart from not giving too much attention to design.
